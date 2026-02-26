@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "292468877329",
+    "project_id": "collabworld-8b909",
+    "storage_bucket": "collabworld-8b909.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292468877329:android:76f21f8bb807c3bd3ae9b0",
+        "android_client_info": {
+          "package_name": "com.collabword.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf7YahNPd-5cu-z2fOvu8ho9abTsuiuxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
