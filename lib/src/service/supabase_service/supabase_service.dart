@@ -3,10 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupaAuthService {
   final supabase = Supabase.instance.client;
 
-  // Current user
+  // ==========================
+  // CURRENT USER
+  // ==========================
   User? get currentUser => supabase.auth.currentUser;
 
-  // Auth state (Splash ke liye)
+  // Auth state stream (for splash screen)
   Stream<AuthState> get authStateChanges => supabase.auth.onAuthStateChange;
 
   // ==========================
@@ -28,9 +30,12 @@ class SupaAuthService {
       );
 
       final user = response.user;
-      if (user == null) return "Signup failed";
 
-      // Save data in users table
+      if (user == null) {
+        return "Signup failed";
+      }
+
+      // Save user data in database
       await supabase.from('users').insert({
         'id': user.id,
         'full_name': fullName,
@@ -83,6 +88,7 @@ class SupaAuthService {
   // ==========================
   Future<Map<String, dynamic>?> getUserData() async {
     final user = currentUser;
+
     if (user == null) return null;
 
     final data = await supabase
@@ -92,5 +98,55 @@ class SupaAuthService {
         .single();
 
     return data;
+  }
+
+  // ==========================
+  // SEND OTP (FORGOT PASSWORD)
+  // ==========================
+  Future<String?> sendPasswordResetOtp({required String email}) async {
+    try {
+      await supabase.auth.signInWithOtp(email: email);
+
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  // ==========================
+  // VERIFY OTP
+  // ==========================
+  Future<String?> verifyOtp({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final response = await supabase.auth.verifyOTP(
+        type: OtpType.email,
+        email: email,
+        token: otp,
+      );
+
+      if (response.user == null) {
+        return "Invalid OTP";
+      }
+
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  // ==========================
+  // UPDATE PASSWORD
+  // ==========================
+  Future<String?> updatePassword({required String newPassword}) async {
+    try {
+      await supabase.auth.updateUser(UserAttributes(password: newPassword));
+
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
   }
 }
