@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:collabworld_ui_design/src/components/app_bg.dart';
 import 'package:collabworld_ui_design/src/service/supabase_service/supabase_service.dart';
 import 'package:collabworld_ui_design/src/views/signin_screen.dart';
@@ -277,7 +276,6 @@ class _VerifyemailviewState extends State<Verifyemailview> {
                     borderRadius: BorderRadius.circular(12),
 
                     onTap: () {
-                      onTap:
                       () async {
                         if (otpControler.text.length != 6) {
                           ScaffoldMessenger.of(context).showSnackBar(
